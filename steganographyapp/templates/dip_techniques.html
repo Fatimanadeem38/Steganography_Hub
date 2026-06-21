@@ -1,0 +1,541 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DIP Techniques | Steganography Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #2b1055, #07010f 55%, #000000);
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-blur {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        .blur1 {
+            width: 320px;
+            height: 320px;
+            background: #8b5cf6;
+            top: 80px;
+            left: -90px;
+        }
+
+        .blur2 {
+            width: 360px;
+            height: 360px;
+            background: #ff4ecd;
+            bottom: -100px;
+            right: -80px;
+            animation-delay: 2s;
+        }
+
+        .blur3 {
+            width: 260px;
+            height: 260px;
+            background: #3b82f6;
+            top: 45%;
+            right: 20%;
+            opacity: 0.2;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0px) translateX(0px); }
+            to { transform: translateY(-35px) translateX(25px); }
+        }
+
+        .navbar {
+            background: rgba(7, 1, 15, 0.78);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.22);
+        }
+
+        .navbar-brand {
+            color: #d7b3ff !important;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: #ddd !important;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #d7b3ff !important;
+        }
+
+        .page-section {
+            padding: 130px 0 80px;
+        }
+
+        .badge-custom {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: rgba(215, 179, 255, 0.12);
+            border: 1px solid rgba(215, 179, 255, 0.25);
+            color: #d7b3ff;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .page-title {
+            font-size: 2.7rem;
+            font-weight: 850;
+            margin-bottom: 14px;
+        }
+
+        .page-subtitle {
+            color: #c9c9c9;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .glass-card {
+            background: rgba(255,255,255,0.075);
+            border: 1px solid rgba(187, 134, 252, 0.22);
+            border-radius: 26px;
+            padding: 30px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.32);
+        }
+
+        .tech-card {
+            background: rgba(255,255,255,0.055);
+            border: 1px solid rgba(187, 134, 252, 0.20);
+            border-radius: 18px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .tech-header {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tech-header span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tech-header i {
+            color: #d7b3ff;
+            font-size: 20px;
+        }
+
+        .tech-body {
+            color: #cfcfcf;
+            line-height: 1.8;
+            padding: 0 22px 20px 58px;
+            font-size: 0.96rem;
+        }
+
+        .use-box {
+            margin-top: 10px;
+            background: rgba(45,255,196,0.07);
+            border: 1px solid rgba(45,255,196,0.20);
+            border-radius: 14px;
+            padding: 12px 15px;
+            color: #d9fff5;
+        }
+
+        .summary-box {
+            background: rgba(255, 193, 7, 0.09);
+            border: 1px solid rgba(255, 193, 7, 0.22);
+            color: #ffdf9e;
+            border-radius: 18px;
+            padding: 18px;
+            line-height: 1.8;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: rgba(215,179,255,0.12);
+            color: #d7b3ff;
+            border: 1px solid rgba(215,179,255,0.25);
+            margin: 5px;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .accordion-button::after {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="bg-blur blur1"></div>
+<div class="bg-blur blur2"></div>
+<div class="bg-blur blur3"></div>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-shield-halved"></i> Steganography Hub
+        </a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'encode' %}">Encode</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'decode' %}">Decode</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{% url 'dip_techniques' %}">DIP Techniques</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="page-section">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <div class="badge-custom">
+                Digital Image Processing Concepts
+            </div>
+
+            <h1 class="page-title">
+                DIP Techniques Used in This Project
+            </h1>
+
+            <p class="page-subtitle">
+                This page explains the Digital Image Processing techniques applied in the secure image steganography system.
+                Click each technique to see how it is used in the project.
+            </p>
+        </div>
+
+        <div class="glass-card mb-4 text-center">
+            <h4 class="mb-3">Project Technique Summary</h4>
+
+            <span class="tag">Spatial Domain</span>
+            <span class="tag">Edge Detection</span>
+            <span class="tag">Pixel Manipulation</span>
+            <span class="tag">Bit-Level Embedding</span>
+            <span class="tag">Canny Edge Detection</span>
+            <span class="tag">Convolution</span>
+            <span class="tag">Filtering</span>
+            <span class="tag">OpenCV</span>
+        </div>
+
+        <div class="glass-card">
+            <div class="accordion" id="techAccordion">
+
+    <!-- 1 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech1">
+            <span><i class="fa-solid fa-border-all"></i> 1. Spatial Domain Processing</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech1" class="collapse show" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Spatial domain processing means working directly on image pixels instead of changing the whole image format.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    Our system hides encrypted messages directly inside the pixels of the selected image.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech2">
+            <span><i class="fa-solid fa-wave-square"></i> 2. Edge-Based Embedding</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech2" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Edge-based embedding hides information in detailed parts of the image where changes are harder to notice.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The system hides messages mainly in edge-rich areas to improve security and reduce visible distortion.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech3">
+            <span><i class="fa-solid fa-grip"></i> 3. Pixel-Level Manipulation</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech3" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Pixel-level manipulation means changing small pixel values inside an image.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The hidden message is inserted by modifying selected image pixels.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech4">
+            <span><i class="fa-solid fa-code"></i> 4. Bit-Level / LSB-Style Embedding</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech4" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                This technique hides secret data inside tiny binary parts of image pixels.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    Encrypted message bits are embedded inside image data with very small visual changes.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech5">
+            <span><i class="fa-solid fa-draw-polygon"></i> 5. Edge Detection</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech5" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Edge detection finds important boundaries and sharp changes inside an image.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The system detects strong image edges to find better regions for hiding data.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech6">
+            <span><i class="fa-solid fa-magnifying-glass-chart"></i> 6. Canny Edge Detection</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech6" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Canny is a popular edge detection method that accurately detects strong image edges.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    OpenCV Canny detection is used to analyze image quality and embedding capacity.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech7">
+            <span><i class="fa-solid fa-location-crosshairs"></i> 7. Feature Detection</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech7" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Feature detection identifies important image structures like edges and textured regions.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The system uses edge regions as important features for secure message embedding.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech8">
+            <span><i class="fa-solid fa-table-cells"></i> 8. Neighborhood Operations</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech8" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Neighborhood operations analyze a pixel together with nearby surrounding pixels.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The system studies nearby pixel changes during edge analysis and embedding.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech9">
+            <span><i class="fa-solid fa-filter-circle-dollar"></i> 9. Convolution</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech9" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Convolution applies small filters over an image to detect patterns and features.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    Convolution is indirectly used inside the Canny edge detection process.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech10">
+            <span><i class="fa-solid fa-sliders"></i> 10. Filtering</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech10" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Filtering removes unwanted noise and improves important image details.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    Filtering helps improve edge detection before message embedding.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech11">
+            <span><i class="fa-solid fa-chart-line"></i> 11. Gradient-Based Analysis</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech11" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Gradient analysis measures how quickly image brightness changes.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The system analyzes intensity changes to identify strong edge regions.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech12">
+            <span><i class="fa-solid fa-object-group"></i> 12. Partial Image Segmentation</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech12" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Image segmentation separates an image into different meaningful regions.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The system partially separates edge-rich and smooth areas to improve embedding quality.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech13">
+            <span><i class="fa-solid fa-shield-virus"></i> 13. Image Security / Forensics</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech13" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                Image security protects hidden information and prevents unauthorized access.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    The project uses encryption, key verification, image freezing, and secure recovery mechanisms.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="tech-card">
+        <button class="tech-header" data-bs-toggle="collapse" data-bs-target="#tech14">
+            <span><i class="fa-solid fa-laptop-code"></i> 14. OpenCV-Based Processing</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div id="tech14" class="collapse" data-bs-parent="#techAccordion">
+            <div class="tech-body">
+                OpenCV is a computer vision library used for image analysis and processing.
+
+                <div class="use-box">
+                    <strong>Usage in Project:</strong>
+                    OpenCV is used for reading images, detecting edges, filtering, and supporting the steganography system.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <div class="summary-box mt-4">
+            <strong>Academic Summary:</strong>
+            This project mainly uses edge-based spatial domain image steganography. It applies pixel-level image manipulation,
+            edge detection, neighborhood-based analysis, filtering, convolution-based processing, and OpenCV implementation
+            to hide encrypted messages securely inside digital images.
+        </div>
+
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

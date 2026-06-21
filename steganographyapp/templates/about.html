@@ -1,0 +1,394 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us | Steganography Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #2b1055, #07010f 55%, #000000);
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-blur {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        .blur1 {
+            width: 320px;
+            height: 320px;
+            background: #8b5cf6;
+            top: 80px;
+            left: -90px;
+        }
+
+        .blur2 {
+            width: 360px;
+            height: 360px;
+            background: #ff4ecd;
+            bottom: -100px;
+            right: -80px;
+            animation-delay: 2s;
+        }
+
+        .blur3 {
+            width: 260px;
+            height: 260px;
+            background: #3b82f6;
+            top: 45%;
+            right: 20%;
+            opacity: 0.2;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(0px) translateX(0px);
+            }
+            to {
+                transform: translateY(-35px) translateX(25px);
+            }
+        }
+
+        .navbar {
+            background: rgba(7, 1, 15, 0.78);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.22);
+        }
+
+        .navbar-brand {
+            color: #d7b3ff !important;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: #ddd !important;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #d7b3ff !important;
+        }
+
+        .hero-section {
+            padding: 140px 0 65px;
+        }
+
+        .badge-custom {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: rgba(215, 179, 255, 0.12);
+            border: 1px solid rgba(215, 179, 255, 0.25);
+            color: #d7b3ff;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 850;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            max-width: 950px;
+            margin: auto;
+            color: #c9c9c9;
+            font-size: 1.08rem;
+            line-height: 1.9;
+        }
+
+        .glass-card {
+            background: rgba(255,255,255,0.075);
+            border: 1px solid rgba(187, 134, 252, 0.22);
+            border-radius: 26px;
+            padding: 35px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.32);
+            height: 100%;
+        }
+
+        .glass-card h2 {
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .glass-card p {
+            color: #c9c9c9;
+            line-height: 1.85;
+        }
+
+        .icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #8b5cf6, #ff4ecd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .team-section {
+            padding: 30px 0 90px;
+        }
+
+        .team-card {
+            background: rgba(255,255,255,0.075);
+            border: 1px solid rgba(187, 134, 252, 0.22);
+            border-radius: 24px;
+            padding: 28px 22px;
+            text-align: center;
+            transition: 0.3s;
+            height: 100%;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 18px 38px rgba(0,0,0,0.28);
+        }
+
+        .team-card:hover {
+            transform: translateY(-7px);
+            border-color: #d7b3ff;
+        }
+
+        .team-image{
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(215,179,255,0.55);
+    margin: 0 auto 22px;
+    display: block;
+    transition: 0.3s;
+}
+
+.team-image:hover{
+    transform: scale(1.05);
+    border-color: #d7b3ff;
+}
+
+        .team-name {
+            font-size: 1.28rem;
+            font-weight: 750;
+            margin-bottom: 10px;
+        }
+
+        .team-role {
+            color: #c7c7c7;
+            line-height: 1.75;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            border-top: 1px solid rgba(187, 134, 252, 0.15);
+            padding: 24px 0;
+            text-align: center;
+            color: #9c9c9c;
+            background: rgba(7, 1, 15, 0.45);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="bg-blur blur1"></div>
+<div class="bg-blur blur2"></div>
+<div class="bg-blur blur3"></div>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-shield-halved"></i> Steganography Hub
+        </a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+                
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'dip_techniques' %}">DIP Techniques</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'encode' %}">Encode</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'decode' %}">Decode</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-section">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <div class="badge-custom">
+                Secure Communication Platform
+            </div>
+
+            <h1 class="section-title">
+                About Steganography Hub
+            </h1>
+
+            <p class="section-subtitle">
+                Steganography Hub is a secure digital communication platform built to protect confidential information
+                through image-based steganography, encryption, verified access, and intelligent security controls.
+                Our goal is to make private communication safer, smarter, and easier for users who need reliable
+                protection for sensitive messages.
+            </p>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-building-shield"></i>
+                    </div>
+                    <h2>Who We Are</h2>
+                    <p>
+                        We are a development team focused on building secure, modern, and user-friendly digital
+                        solutions. Steganography Hub reflects our interest in cybersecurity, privacy protection,
+                        and practical web-based systems that solve real communication security problems.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h2>Our Motive</h2>
+                    <p>
+                        Our motive is to provide a protected environment where users can hide and manage secret
+                        messages inside images while preventing unauthorized decoding attempts through account
+                        verification, secret keys, image keys, alerts, and access restrictions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h2>Our Vision</h2>
+                    <p>
+                        We aim to create a trustworthy platform where privacy, security, and usability work together.
+                        Our vision is to make secure communication more accessible for students, professionals,
+                        and users who value confidentiality in digital information sharing.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <div class="badge-custom">
+                Our Team
+            </div>
+
+            <h1 class="section-title" style="font-size:2.4rem;">
+                Meet The Developers
+            </h1>
+
+            <p class="section-subtitle">
+                The four-member development team behind Steganography Hub.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team-card">
+                    <img src="{% static 'images/fatima.jpg' %}" class="team-image">
+
+                    <div class="team-name">Fatima Nadeem</div>
+
+                    <div class="team-role">
+                        Developer focused on secure authentication, backend logic,
+                        email verification, and protection-based system workflows.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team-card">
+                    <img src="{% static 'images/zaira.jpg' %}" class="team-image">
+
+                    <div class="team-name">Zaira Fatima</div>
+
+                    <div class="team-role">
+                        Developer focused on frontend design, interface structure,
+                        user experience, and clean visual presentation of the platform.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team-card">
+                    <img src="{% static 'images/bushra.jpeg' %}" class="team-image">
+
+                    <div class="team-name">Bushra Farooq</div>
+
+                    <div class="team-role">
+                        Developer focused on system integration, workflow testing,
+                        feature organization, and secure platform functionality.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team-card">
+                    <img src="{% static 'images/iqra.jpg' %}" class="team-image">
+
+                    <div class="team-name">Iqra Baloch</div>
+
+                    <div class="team-role">
+                        Developer focused on research, validation, testing support,
+                        documentation, and improvement of secure communication processes.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2026 Steganography Hub — Secure Communication Through Intelligent Protection
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

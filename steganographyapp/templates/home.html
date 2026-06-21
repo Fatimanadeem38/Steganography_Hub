@@ -1,0 +1,425 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Steganography Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            background: #07010f;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at top, #1a102f, #07010f 75%);
+        }
+
+        .navbar {
+            background: rgba(7, 1, 15, 0.88);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.22);
+        }
+
+        .navbar-brand {
+            color: #d7b3ff !important;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: #ddd !important;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover {
+            color: #ff4ecd !important;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-title {
+            font-size: 3.7rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .accent-text {
+            color: #d7b3ff;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            color: #cfcfcf;
+            font-size: 1.15rem;
+            margin-top: 20px;
+            max-width: 620px;
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, #8b5cf6, #ff4ecd);
+            border: none;
+            color: white;
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.35);
+            transition: 0.3s;
+        }
+
+        .btn-main:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(255, 78, 205, 0.45);
+        }
+
+        .btn-outline-main {
+            border: 1px solid #bb86fc;
+            color: #d7b3ff;
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-outline-main:hover {
+            background: #bb86fc;
+            color: #07010f;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(187, 134, 252, 0.2);
+            border-radius: 22px;
+            padding: 30px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.08);
+            height: 100%;
+            transition: 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 35px rgba(255, 78, 205, 0.22);
+        }
+
+        .icon-box {
+            font-size: 42px;
+            color: #d7b3ff;
+            margin-bottom: 18px;
+            text-shadow: 0 0 18px rgba(215, 179, 255, 0.45);
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: #bcbcbc;
+            max-width: 760px;
+            margin: 0 auto 50px;
+        }
+
+        .hero-frame {
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(187, 134, 252, 0.35);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.32);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .hero-frame img {
+            width: 100%;
+            height: 430px;
+            object-fit: cover;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #8b5cf6, #ff4ecd);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        footer {
+            border-top: 1px solid rgba(187, 134, 252, 0.22);
+            background: rgba(7, 1, 15, 0.9);
+            padding: 25px 0;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.4rem;
+            }
+
+            .hero-frame img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-shield-halved"></i> Steganography Hub
+        </a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'dip_techniques' %}">DIP Techniques</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'encode' %}">Encode</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'decode' %}">Decode</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1 class="hero-title">
+                    Secure Image <span class="accent-text">Steganography</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Hide secret messages inside images using Digital Image Processing.<br>
+                    A complete secure communication system combining image processing, encryption, steganography, authentication, and intrusion detection.
+                </p>
+
+                <div class="mt-4 d-flex flex-wrap gap-3">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'encode' %}" class="btn btn-main">
+                            <i class="fa-solid fa-lock"></i> Start Encoding
+                        </a>
+                        <a href="{% url 'decode' %}" class="btn btn-outline-main">
+                            <i class="fa-solid fa-unlock"></i> Decode Message
+                        </a>
+                    {% else %}
+                        <a href="{% url 'signup' %}" class="btn btn-main">
+                            <i class="fa-solid fa-user-plus"></i> Get Started
+                        </a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-main">
+                            <i class="fa-solid fa-right-to-bracket"></i> Login
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="hero-frame">
+                    <img src="{% static 'images/cybersecurity.jpg' %}" alt="Cybersecurity Center">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="section-title accent-text" data-aos="fade-up">Project Core Features</h2>
+        <p class="section-subtitle" data-aos="fade-up">
+            A complete secure communication system combining image processing, encryption,
+            steganography, authentication, and intrusion detection.
+        </p>
+
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="zoom-in">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fa-solid fa-image"></i></div>
+                    <h4> Image Encoding</h4>
+                    <p>Secret messages are hidden inside selected images using advanced steganography.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fa-solid fa-key"></i></div>
+                    <h4>Strong Key System</h4>
+                    <p>Image ID, Secret Key, and private Image Key create a secure multi-layer access system.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h4>Intrusion Detection</h4>
+                    <p>Wrong attempts trigger freezing, permanent lock, and automatic email alerts to the sender.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title accent-text" data-aos="fade-up">How It Works</h2>
+            <p class="section-subtitle" data-aos="fade-up">
+                The system follows a secure sender-to-receiver workflow.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-3" data-aos="fade-up">
+                <div class="glass-card">
+                    <div class="step-number">1</div>
+                    <h5>Sender Encodes</h5>
+                    <p>Sender selects image and enters secret message.</p>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass-card">
+                    <div class="step-number">2</div>
+                    <h5>System Secures</h5>
+                    <p>Message is encrypted and hidden using edge-based pixel shuffling.</p>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass-card">
+                    <div class="step-number">3</div>
+                    <h5>Receiver Decodes</h5>
+                    <p>Receiver enters Image ID and Secret Key to reveal the hidden message.</p>
+                </div>
+            </div>
+
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="glass-card">
+                    <div class="step-number">4</div>
+                    <h5>Attack Protected</h5>
+                    <p>Multiple wrong attempts freeze access and alert the original sender.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="section-title accent-text" data-aos="fade-up">DIP + Cybersecurity Fusion</h2>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-4" data-aos="flip-left">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fa-solid fa-wave-square"></i></div>
+                    <h4>DIP Analysis</h4>
+                    <p>MSE, PSNR, SSIM, histogram comparison, edge detection, and image quality analysis.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="100">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fa-solid fa-user-shield"></i></div>
+                    <h4>Cyber Security</h4>
+                    <p>Fernet encryption, hashed keys, authentication, access control, and email alerts.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fa-solid fa-code-branch"></i></div>
+                    <h4>Fusion Technique</h4>
+                    <p>Edge-based LSB combined with secret-key pixel position shuffling for stronger hiding.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="text-center">
+    <div class="container">
+        <p class="mb-0">
+            © 2026 Steganography Hub | Digital Image Processing + Cybersecurity Project
+        </p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+
+    particlesJS("particles-js", {
+        particles: {
+            number: { value: 65 },
+            color: { value: "#bb86fc" },
+            shape: { type: "circle" },
+            opacity: { value: 0.35 },
+            size: { value: 3 },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#bb86fc",
+                opacity: 0.18,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 1.6
+            }
+        },
+        interactivity: {
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: "repulse"
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

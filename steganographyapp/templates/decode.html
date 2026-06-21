@@ -1,0 +1,531 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Decode Message | Steganography Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, #2b1055, #07010f 55%, #000000);
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-blur {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        .blur1 {
+            width: 320px;
+            height: 320px;
+            background: #8b5cf6;
+            top: 80px;
+            left: -90px;
+        }
+
+        .blur2 {
+            width: 360px;
+            height: 360px;
+            background: #ff4ecd;
+            bottom: -100px;
+            right: -80px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0px) translateX(0px); }
+            to { transform: translateY(-35px) translateX(25px); }
+        }
+
+        .navbar {
+            background: rgba(7, 1, 15, 0.78);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.22);
+        }
+
+        .navbar-brand {
+            color: #d7b3ff !important;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: #ddd !important;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #d7b3ff !important;
+        }
+
+        .page-section {
+            padding: 130px 0 80px;
+        }
+
+        .badge-custom {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: rgba(215, 179, 255, 0.12);
+            border: 1px solid rgba(215, 179, 255, 0.25);
+            color: #d7b3ff;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 850;
+            margin-bottom: 14px;
+        }
+
+        .page-subtitle {
+            color: #c9c9c9;
+            line-height: 1.8;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .glass-card {
+            background: rgba(255,255,255,0.075);
+            border: 1px solid rgba(187, 134, 252, 0.22);
+            border-radius: 26px;
+            padding: 32px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.32);
+        }
+
+        .form-label {
+            color: #e8e8e8;
+            font-weight: 650;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            background: rgba(7, 1, 15, 0.82);
+            border: 1px solid rgba(187, 134, 252, 0.28);
+            color: #ffffff;
+            border-radius: 15px;
+            padding: 13px 15px;
+        }
+
+        .form-control:focus {
+            background: rgba(7, 1, 15, 0.95);
+            color: #ffffff;
+            border-color: #d7b3ff;
+            box-shadow: none;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.45);
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, #8b5cf6, #ff4ecd);
+            border: none;
+            color: white;
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-weight: 750;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-main:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .warning-note {
+            color: #ffdf9e;
+            background: rgba(255, 193, 7, 0.09);
+            border: 1px solid rgba(255, 193, 7, 0.22);
+            border-radius: 16px;
+            padding: 14px 16px;
+            line-height: 1.6;
+        }
+
+        .decoded-card {
+            margin-top: 35px;
+            border: 1px solid rgba(45,255,196,0.25);
+            background: rgba(45,255,196,0.06);
+        }
+
+        .decode-visual {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.32);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 12px;
+        }
+
+        .decoded-image {
+            width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            border-radius: 16px;
+            filter: blur(4px) brightness(0.8);
+            animation: revealImage 3.2s ease forwards;
+        }
+
+        @keyframes revealImage {
+            0% {
+                filter: blur(8px) brightness(0.55);
+                transform: scale(1.03);
+            }
+            60% {
+                filter: blur(3px) brightness(0.85);
+            }
+            100% {
+                filter: blur(0px) brightness(1);
+                transform: scale(1);
+            }
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            top: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #2dffc4, transparent);
+            box-shadow: 0 0 20px rgba(45,255,196,0.95);
+            animation: scanMove 2.8s ease-in-out forwards;
+        }
+
+        @keyframes scanMove {
+            0% { top: 12px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: calc(100% - 12px); opacity: 0; }
+        }
+
+        .pixel-layer {
+            position: absolute;
+            inset: 12px;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle, rgba(45,255,196,0.75) 1px, transparent 1px),
+                radial-gradient(circle, rgba(215,179,255,0.55) 1px, transparent 1px);
+            background-size: 18px 18px, 28px 28px;
+            background-position: 0 0, 7px 9px;
+            opacity: 0;
+            animation: pixelFloat 3s ease forwards;
+        }
+
+        @keyframes pixelFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            25% {
+                opacity: 0.8;
+            }
+            75% {
+                opacity: 0.55;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+        }
+
+        .decode-steps {
+            margin-top: 18px;
+        }
+
+        .decode-step {
+            color: #cfcfcf;
+            margin-bottom: 9px;
+            opacity: 0;
+            animation: stepIn 0.45s ease forwards;
+        }
+
+        .decode-step:nth-child(1) { animation-delay: 0.2s; }
+        .decode-step:nth-child(2) { animation-delay: 0.8s; }
+        .decode-step:nth-child(3) { animation-delay: 1.4s; }
+        .decode-step:nth-child(4) { animation-delay: 2.0s; }
+
+        @keyframes stepIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message-box {
+            background: rgba(0,0,0,0.32);
+            border: 1px solid rgba(45,255,196,0.22);
+            border-radius: 18px;
+            padding: 18px;
+            color: #ffffff;
+            line-height: 1.8;
+            word-break: break-word;
+        }
+
+        .countdown-box {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #ffdf9e;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .secure-icon {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(215,179,255,0.12);
+            border: 1px solid rgba(215,179,255,0.25);
+            color: #d7b3ff;
+            font-size: 30px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="bg-blur blur1"></div>
+<div class="bg-blur blur2"></div>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-shield-halved"></i> Steganography Hub
+        </a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'dip_techniques' %}">DIP Techniques</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'encode' %}">Encode</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{% url 'decode' %}">Decode</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="page-section">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <div class="badge-custom">Secure Decoding Workspace</div>
+
+            <h1 class="page-title">Decode Hidden Message</h1>
+
+            <p class="page-subtitle">
+                Enter the Image ID and Secret Key shared by the sender. The encoded image will only be revealed
+                after successful key verification.
+            </p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mb-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if blocked %}
+            <div class="glass-card">
+                <div class="secure-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <h3 class="mb-3">Decoding Blocked</h3>
+
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            </div>
+
+        {% elif temp_locked %}
+            <div class="glass-card">
+                <div class="secure-icon">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                </div>
+
+                <h3 class="mb-3">Temporary Security Lock</h3>
+
+                <div class="warning-note">
+                    {{ message }}
+                </div>
+
+                <div class="countdown-box">
+                    <span id="countdown">{{ remaining_seconds }}</span>s
+                </div>
+            </div>
+
+        {% else %}
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="glass-card">
+                        <h3 class="mb-4">
+                            <i class="fa-solid fa-unlock-keyhole"></i> Decode Message
+                        </h3>
+
+                        <form method="POST" action="{% url 'decode' %}" id="decodeForm">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label class="form-label">Image ID</label>
+                                <input type="text"
+                                       name="image_id"
+                                       class="form-control"
+                                       placeholder="Enter Image ID"
+                                       required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Secret Key</label>
+                                <input type="text"
+                                       name="secret_key"
+                                       class="form-control"
+                                       placeholder="Enter Secret Key"
+                                       autocomplete="off"
+                                       required>
+                            </div>
+
+                            <button type="submit" class="btn btn-main" id="decodeBtn">
+                                <i class="fa-solid fa-eye"></i> Decode Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="glass-card h-100">
+                        <h3 class="mb-4">
+                            <i class="fa-solid fa-shield-halved"></i> Security Protection
+                        </h3>
+
+                        <div class="warning-note mb-3">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            After 3 wrong attempts, decoding is blocked for 2 minutes.
+                        </div>
+
+                        <div class="warning-note">
+                            <i class="fa-solid fa-lock"></i>
+                            After 5 wrong attempts, the image is frozen until sender confirmation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if success %}
+            <div class="glass-card decoded-card">
+                <h3 class="mb-4">
+                    <i class="fa-solid fa-circle-check"></i> Message Decoded Successfully
+                </h3>
+
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <div class="decode-visual">
+                            <img src="{{ encoded_obj.encoded_image.url }}"
+                                 class="decoded-image"
+                                 alt="Decoded Image">
+
+                            <div class="scan-line"></div>
+                            <div class="pixel-layer"></div>
+                        </div>
+
+                        <div class="decode-steps">
+                            <div class="decode-step">
+                                <i class="fa-solid fa-check text-success"></i> Image verified successfully
+                            </div>
+                            <div class="decode-step">
+                                <i class="fa-solid fa-check text-success"></i> Pixel data extracted
+                            </div>
+                            <div class="decode-step">
+                                <i class="fa-solid fa-check text-success"></i> Secret key matched
+                            </div>
+                            <div class="decode-step">
+                                <i class="fa-solid fa-check text-success"></i> Hidden message decrypted
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <h5 class="mb-3">Decoded Message</h5>
+
+                        <div class="message-box" id="decodedMessageBox">
+                            {{ decoded_message }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const form = document.getElementById("decodeForm");
+
+    if (form) {
+        form.addEventListener("submit", function () {
+            const btn = document.getElementById("decodeBtn");
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying Key...';
+            }
+        });
+    }
+
+    const countdown = document.getElementById("countdown");
+
+    if (countdown) {
+        let seconds = parseInt(countdown.innerText);
+
+        const timer = setInterval(function () {
+            seconds--;
+
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.location.href = "{% url 'decode' %}";
+            } else {
+                countdown.innerText = seconds;
+            }
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>

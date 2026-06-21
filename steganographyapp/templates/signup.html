@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account | Steganography Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1a102f, #07010f 75%);
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar {
+            background: rgba(7, 1, 15, 0.88);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(187, 134, 252, 0.22);
+        }
+
+        .navbar-brand {
+            color: #d7b3ff !important;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: #ddd !important;
+            margin-left: 15px;
+        }
+
+        .nav-link:hover {
+            color: #d7b3ff !important;
+        }
+
+        .auth-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 110px 0 60px;
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(187, 134, 252, 0.22);
+            border-radius: 26px;
+            padding: 42px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        .auth-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            color: #bcbcbc;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .form-label {
+            color: #e8e8e8;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            background: rgba(7, 1, 15, 0.8);
+            border: 1px solid rgba(187, 134, 252, 0.25);
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 13px 15px;
+        }
+
+        .form-control:focus {
+            background: rgba(7, 1, 15, 0.95);
+            color: #ffffff;
+            border-color: #d7b3ff;
+            box-shadow: none;
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, #8b5cf6, #ff4ecd);
+            border: none;
+            color: white;
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-main:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .side-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(187, 134, 252, 0.18);
+            border-radius: 26px;
+            padding: 38px;
+            height: 100%;
+        }
+
+        .side-panel h2 {
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .side-panel p {
+            color: #bcbcbc;
+            line-height: 1.7;
+        }
+
+        .feature-line {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            color: #dddddd;
+        }
+
+        .feature-line i {
+            color: #d7b3ff;
+            margin-top: 4px;
+        }
+
+        .login-link {
+            color: #d7b3ff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .login-link:hover {
+            color: #ffffff;
+        }
+
+        .alert {
+            border-radius: 14px;
+            border: none;
+        }
+
+        .small-note {
+            color: #9f9f9f;
+            font-size: 0.9rem;
+            margin-top: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-shield-halved"></i> Steganography Hub
+        </a>
+
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="auth-section">
+    <div class="container">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-6">
+                <div class="auth-card">
+                    <h1 class="auth-title">Create Your Account</h1>
+
+                    <p class="auth-subtitle">
+                        Set up your secure account. A confirmation link will be sent to your email before access is enabled.
+                    </p>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <div class="alert alert-danger">
+                                {{ message }}
+                           </div>
+                    {% endif %}
+                        {% endfor %}
+                            {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            {{ form.username }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            {{ form.email }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            {{ form.password }}
+                        </div>
+                        <small class="text-secondary">
+                            Password must be at least 8 characters and contain letters and numbers.
+                            </small>
+                        <div class="mb-4">
+                            <label class="form-label">Confirm Password</label>
+                            {{ form.confirm_password }}
+                        </div>
+
+                        <button type="submit" class="btn btn-main">
+                            <i class="fa-solid fa-envelope-circle-check"></i> Create Account
+                        </button>
+                    </form>
+
+                    <p class="small-note">
+                        After submitting, check your inbox and confirm your email address to activate your account.
+                    </p>
+
+                    <p class="mt-4 mb-0 text-center text-secondary">
+                        Already have an account?
+                        <a href="{% url 'login' %}" class="login-link">Login here</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="side-panel">
+                    <p class="text-uppercase small mb-2" style="color:#d7b3ff; font-weight:700;">
+                        Account Protection
+                    </p>
+
+                    <h2>
+                        Verified access for secure communication
+                    </h2>
+
+                    <p class="mt-3">
+                        Your account is activated only after email confirmation, helping keep access reliable and protected.
+                    </p>
+
+                    <div class="feature-line">
+                        <i class="fa-solid fa-envelope-circle-check"></i>
+                        <span>Email confirmation before account activation</span>
+                    </div>
+
+                    <div class="feature-line">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Secure password storage and protected login sessions</span>
+                    </div>
+
+                    <div class="feature-line">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span>Authenticated access to protected tools</span>
+                    </div>
+
+                    <div class="feature-line">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Built-in safeguards against unauthorized access</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
