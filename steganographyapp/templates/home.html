@@ -10,184 +10,438 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <style>
-        body {
-            margin: 0;
-            background: #07010f;
-            color: #ffffff;
-            font-family: 'Segoe UI', sans-serif;
-            overflow-x: hidden;
-        }
+   <style>
+    :root {
+        --primary-blue: #1469e8;
+        --primary-dark: #0b2d63;
+        --secondary-blue: #3b82f6;
+        --light-blue: #eaf3ff;
+        --soft-blue: #f5f9ff;
+        --border-blue: #d7e6f8;
+        --text-dark: #0b2348;
+        --text-muted: #64748b;
+        --white: #ffffff;
+    }
 
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at top, #1a102f, #07010f 75%);
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        .navbar {
-            background: rgba(7, 1, 15, 0.88);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(187, 134, 252, 0.22);
-        }
+    html {
+        scroll-behavior: smooth;
+    }
 
-        .navbar-brand {
-            color: #d7b3ff !important;
-            font-weight: 700;
-            letter-spacing: 1px;
+    body {
+        margin: 0;
+        background: #ffffff;
+        color: var(--text-dark);
+        font-family: 'Roboto', sans-serif;
+        overflow-x: hidden;
+    }
+
+
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar {
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid #e6edf7;
+        box-shadow: 0 2px 18px rgba(15, 56, 110, 0.06);
+        padding: 12px 0;
+    }
+
+    .navbar-brand {
+        color: var(--text-dark) !important;
+        font-weight: 750;
+        letter-spacing: 0.3px;
+        font-size: 1.35rem;
+    }
+
+    .navbar-brand i {
+        color: var(--primary-blue);
+        margin-right: 7px;
+    }
+
+    .nav-link {
+        color: #334155 !important;
+        margin-left: 16px;
+        font-weight: 500;
+        position: relative;
+        transition: all 0.25s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--primary-blue) !important;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -4px;
+        width: 0;
+        height: 2px;
+        background: var(--primary-blue);
+        border-radius: 10px;
+        transform: translateX(-50%);
+        transition: width 0.25s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 55%;
+    }
+
+    .navbar-toggler {
+        border: 1px solid var(--border-blue);
+        box-shadow: none !important;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 100px;
+        padding-bottom: 55px;
+        position: relative;
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        width: 430px;
+        height: 430px;
+        border-radius: 50%;
+        background: rgba(20, 105, 232, 0.05);
+        left: -220px;
+        bottom: 20px;
+        z-index: -1;
+    }
+
+    .hero-title {
+        font-size: 3.8rem;
+        font-weight: 800;
+        line-height: 1.1;
+        color: var(--text-dark);
+        letter-spacing: -1.5px;
+    }
+
+    .accent-text {
+        color: var(--primary-blue);
+        font-weight: 800;
+    }
+
+    .hero-subtitle {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-top: 22px;
+        max-width: 620px;
+        line-height: 1.8;
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .btn-main {
+        background: linear-gradient(
+            135deg,
+            var(--primary-blue),
+            #0d5dd7
+        );
+        border: none;
+        color: #ffffff;
+        padding: 13px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        box-shadow: 0 8px 20px rgba(20, 105, 232, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .btn-main:hover {
+        color: #ffffff;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(20, 105, 232, 0.28);
+    }
+
+    .btn-outline-main {
+        border: 1.5px solid var(--primary-blue);
+        color: var(--primary-blue);
+        background: #ffffff;
+        padding: 12px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-main:hover {
+        background: var(--light-blue);
+        color: var(--primary-blue);
+        border-color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
+
+    /* =========================
+       HERO IMAGE
+    ========================= */
+
+    .hero-frame {
+        border-radius: 26px;
+        overflow: hidden;
+        border: 1px solid #d9e7f7;
+        box-shadow:
+            0 20px 45px rgba(15, 64, 125, 0.12),
+            0 5px 15px rgba(20, 105, 232, 0.06);
+        background: linear-gradient(
+            145deg,
+            #ffffff,
+            #edf5ff
+        );
+        padding: 8px;
+    }
+
+    .hero-frame img {
+        width: 100%;
+        height: 430px;
+        object-fit: cover;
+        border-radius: 19px;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    section.py-5 {
+        position: relative;
+    }
+
+    section.py-5:nth-of-type(even) {
+        background: rgba(246, 250, 255, 0.6);
+    }
+
+    .section-title {
+        font-size: 2.45rem;
+        font-weight: 800;
+        margin-bottom: 14px;
+        color: var(--text-dark);
+        letter-spacing: -0.5px;
+    }
+
+    .section-title.accent-text {
+        color: var(--text-dark);
+    }
+
+    .section-title.accent-text::after {
+        content: "";
+        display: block;
+        width: 52px;
+        height: 4px;
+        background: var(--primary-blue);
+        border-radius: 20px;
+        margin: 15px auto 0;
+    }
+
+    .section-subtitle {
+        color: var(--text-muted);
+        max-width: 760px;
+        margin: 0 auto 50px;
+        line-height: 1.75;
+        font-size: 1.02rem;
+    }
+
+    /* =========================
+       FEATURE CARDS
+    ========================= */
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid var(--border-blue);
+        border-radius: 18px;
+        padding: 32px 28px;
+        box-shadow: 0 10px 32px rgba(14, 60, 115, 0.07);
+        height: 100%;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-card::before {
+        content: "";
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: rgba(20, 105, 232, 0.045);
+        top: -35px;
+        right: -30px;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-7px);
+        border-color: #b9d5f5;
+        box-shadow: 0 18px 40px rgba(20, 76, 145, 0.12);
+    }
+
+    .glass-card h4,
+    .glass-card h5 {
+        color: var(--text-dark);
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .glass-card p {
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin-bottom: 0;
+    }
+
+    /* =========================
+       ICONS
+    ========================= */
+
+    .icon-box {
+        width: 68px;
+        height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 29px;
+        color: var(--primary-blue);
+        margin: 0 auto 21px;
+        border-radius: 18px;
+        background: var(--light-blue);
+        border: 1px solid #dceaff;
+        transition: all 0.3s ease;
+    }
+
+    .glass-card:hover .icon-box {
+        background: var(--primary-blue);
+        color: #ffffff;
+        transform: scale(1.05);
+    }
+
+    /* =========================
+       HOW IT WORKS
+    ========================= */
+
+    .step-number {
+        width: 48px;
+        height: 48px;
+        background: var(--primary-blue);
+        color: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        margin-bottom: 20px;
+        box-shadow: 0 6px 18px rgba(20, 105, 232, 0.2);
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        border-top: 1px solid #e2ebf5;
+        background: #f7faff;
+        padding: 28px 0;
+        color: #64748b;
+        font-size: 0.95rem;
+    }
+
+    /* =========================
+       LOGOUT LINK
+    ========================= */
+
+    .nav-link.text-danger {
+        color: #dc3545 !important;
+    }
+
+    .nav-link.text-danger:hover {
+        color: #b42318 !important;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background: #ffffff;
+            margin-top: 14px;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border-blue);
+            box-shadow: 0 10px 25px rgba(12, 52, 100, 0.08);
         }
 
         .nav-link {
-            color: #ddd !important;
-            margin-left: 15px;
-        }
-
-        .nav-link:hover {
-            color: #ff4ecd !important;
+            margin-left: 0;
+            padding: 10px 5px !important;
         }
 
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 80px;
-        }
-
-        .hero-title {
-            font-size: 3.7rem;
-            font-weight: 800;
-            line-height: 1.1;
-        }
-
-        .accent-text {
-            color: #d7b3ff;
-            font-weight: 700;
+            padding-top: 130px;
+            text-align: center;
         }
 
         .hero-subtitle {
-            color: #cfcfcf;
-            font-size: 1.15rem;
-            margin-top: 20px;
-            max-width: 620px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .btn-main {
-            background: linear-gradient(135deg, #8b5cf6, #ff4ecd);
-            border: none;
-            color: white;
-            padding: 13px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.35);
-            transition: 0.3s;
+        .hero .d-flex {
+            justify-content: center;
         }
+    }
 
-        .btn-main:hover {
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 0 40px rgba(255, 78, 205, 0.45);
-        }
-
-        .btn-outline-main {
-            border: 1px solid #bb86fc;
-            color: #d7b3ff;
-            padding: 13px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn-outline-main:hover {
-            background: #bb86fc;
-            color: #07010f;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(187, 134, 252, 0.2);
-            border-radius: 22px;
-            padding: 30px;
-            backdrop-filter: blur(14px);
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.08);
-            height: 100%;
-            transition: 0.3s;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 35px rgba(255, 78, 205, 0.22);
-        }
-
-        .icon-box {
-            font-size: 42px;
-            color: #d7b3ff;
-            margin-bottom: 18px;
-            text-shadow: 0 0 18px rgba(215, 179, 255, 0.45);
-        }
-
-        .section-title {
-            font-size: 2.4rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .section-subtitle {
-            color: #bcbcbc;
-            max-width: 760px;
-            margin: 0 auto 50px;
-        }
-
-        .hero-frame {
-            border-radius: 25px;
-            overflow: hidden;
-            border: 1px solid rgba(187, 134, 252, 0.35);
-            box-shadow: 0 0 40px rgba(139, 92, 246, 0.32);
-            background: rgba(255, 255, 255, 0.04);
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.65rem;
         }
 
         .hero-frame img {
+            height: 300px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .glass-card {
+            padding: 28px 24px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 2.25rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .btn-main,
+        .btn-outline-main {
             width: 100%;
-            height: 430px;
-            object-fit: cover;
         }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #8b5cf6, #ff4ecd);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            margin-bottom: 18px;
-        }
-
-        footer {
-            border-top: 1px solid rgba(187, 134, 252, 0.22);
-            background: rgba(7, 1, 15, 0.9);
-            padding: 25px 0;
-            color: #aaa;
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.4rem;
-            }
-
-            .hero-frame img {
-                height: 300px;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
 
-<div id="particles-js"></div>
 
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
@@ -383,7 +637,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
 <script>
     AOS.init({
@@ -391,34 +644,7 @@
         once: true
     });
 
-    particlesJS("particles-js", {
-        particles: {
-            number: { value: 65 },
-            color: { value: "#bb86fc" },
-            shape: { type: "circle" },
-            opacity: { value: 0.35 },
-            size: { value: 3 },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: "#bb86fc",
-                opacity: 0.18,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 1.6
-            }
-        },
-        interactivity: {
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: "repulse"
-                }
-            }
-        }
-    });
+
 </script>
 
 </body>
